@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reset Password</title>
+
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #f8faff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+}
+.container {
+  background: white;
+  padding: 30px 40px;
+  width: 360px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+h2 {
+  color: #0b56b3;
+  margin-bottom: 10px;
+  text-align: center;
+}
+label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px;
+  background: #0b56b3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+button:hover { background: #084a9c; }
+#message {
+  margin-top: 15px;
+  min-height: 20px;
+  text-align: center;
+}
+.back {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+}
+.back a {
+  color: #0b56b3;
+  font-weight: 600;
+  text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>Reset Password</h2>
+
+  <label>Email</label>
+  <input type="email" id="emailInput" placeholder="Enter your email">
+
+  <button id="sendBtn">Send Reset Link</button>
+
+  <p id="message"></p>
+
+  <div class="back">
+    <a href="index.html">← Back to login</a>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+import { getAuth, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCs-pheSxe9bkAqnhG9qOjF7RvFfb9k00A",
+  authDomain: "e-civilian-portal2007.firebaseapp.com",
+  projectId: "e-civilian-portal2007"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+document.getElementById("sendBtn").onclick = async () => {
+  const email = document.getElementById("emailInput").value.trim();
+  const msg = document.getElementById("message");
+
+  if (!email) {
+    msg.style.color = "red";
+    msg.textContent = "Please enter your email.";
+    return;
+  }
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+    msg.style.color = "green";
+    msg.textContent = "Reset link sent. Check your inbox.";
+  } catch (e) {
+    msg.style.color = "red";
+    msg.textContent = e.message;
+  }
+};
+</script>
+
+</body>
+</html>

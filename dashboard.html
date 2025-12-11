@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moeezland e-Civilian Dashboard</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f3f7ff;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #0b56b3;
+      color: white;
+      width: 100%;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .logo {
+      text-align: center;
+      margin-top: 35px;
+    }
+
+    .logo img {
+      width: 380px;
+      max-width: 85%;
+    }
+
+    .dashboard {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+      width: 90%;
+      max-width: 1100px;
+      margin-top: 30px;
+      margin-bottom: 60px;
+    }
+
+    .profile-card {
+      background: #ffffff;
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 14px;
+      padding: 25px 35px;
+      width: 100%;
+      max-width: 520px;
+      transition: transform 0.2s ease;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .profile-card h1 {
+      font-size: 1.4rem;
+      color: #0b56b3;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .field {
+      margin: 8px 0;
+      font-size: 15px;
+    }
+
+    .field strong {
+      display: inline-block;
+      width: 180px;
+      color: #0b56b3;
+    }
+
+    .muted {
+      color: #666;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .service-card {
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      padding: 25px 20px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .service-card img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 15px;
+    }
+
+    .service-card h3 {
+      color: #0b56b3;
+      font-size: 1.05rem;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+
+    .service-card.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .service-card.disabled:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    #logoutBtn {
+      background-color: #0b56b3;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px;
+      width: 220px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 25px;
+      transition: background 0.3s;
+    }
+
+    #logoutBtn:hover {
+      background-color: #094a9b;
+    }
+
+    footer {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      padding: 20px 0 40px;
+    }
+  </style>
+</head>
+<body>
+  <header id="welcomeHeader">Welcome to Moeezland e-Civilian Portal</header>
+
+  <div class="logo">
+    <img src="0d7cc0c7-b1b8-456a-bb2a-0b8bc59a06a4.png" alt="Moeezland Population Service Logo">
+  </div>
+
+  <div class="dashboard">
+    <div class="profile-card">
+      <h1>Civilian Information</h1>
+      <div id="profile">Loading your information...</div>
+    </div>
+
+    <!-- SERVICE GRID -->
+    <div class="services">
+      <div class="service-card" onclick="window.open('https://forms.gle/zbtuTHG1JuDEQEeB8', '_blank')">
+        <img src="permit.png" alt="Residence Permit (الإقامة)">
+        <h3>Residence Permit (الإقامة)</h3>
+      </div>
+
+      <div class="service-card" onclick="window.open('https://forms.gle/Hy8a9PHGkweNnxre7', '_blank')">
+        <img src="joinparliament.png" alt="Join the Parliament (مجلس)">
+        <h3>Join the Parliament (مجلس)</h3>
+      </div>
+
+      <div class="service-card" onclick="window.open('https://forms.gle/tRi261JA422tu35P9', '_blank')">
+        <img src="digitalid.png" alt="Civil Affairs (الأحوال المدنية)">
+        <h3>Civil Affairs (الأحوال المدنية)</h3>
+      </div>
+
+      <div class="service-card" onclick="window.open('https://forms.gle/Hy8a9PHGkweNnxre7', '_blank')">
+        <img src="traffic.png" alt="Traffic Services (المرور)">
+        <h3>Traffic Services (المرور)</h3>
+      </div>
+
+      <div class="service-card" onclick="window.open('https://forms.gle/SvcBGstJsQV2ofCC8', '_blank')">
+        <img src="passport.png" alt="Passport (الجوازات)">
+        <h3>Passport (الجوازات)</h3>
+      </div>
+
+      <div class="service-card disabled">
+        <img src="vote.png" alt="Vote Now! Unavailable right now!">
+        <h3>Voting (التصويت) <br>Unavailable (غير متاح)</h3>
+      </div>
+
+      <div class="service-card" onclick="window.open('https://forms.gle/VkAywiaJNYeapUiV6', '_blank')">
+        <img src="f0727ec9-2f13-4644-bb6f-780726f0a201.png" alt="Sponsorship Management (الكفالة)">
+        <h3>Sponsorship Management (الكفالة)</h3>
+      </div>
+
+      <div class="service-card" onclick="window.open('https://forms.gle/Hy8a9PHGkweNnxre7', '_blank')">
+        <img src="9471a994-3c51-4668-adc1-20094f1ab0fe.png" alt="Prisoner Services (خدمات السجناء)">
+        <h3>Prisoner Services (خدمات السجناء)</h3>
+      </div>
+
+      <!-- NEW LEGAL AFFAIRS CARD -->
+      <div class="service-card" onclick="window.open('https://forms.gle/Hy8a9PHGkweNnxre7', '_blank')">
+        <img src="legal.png" alt="Legal Affairs (الشؤون القانونية)">
+        <h3>Legal Affairs (الشؤون القانونية)</h3>
+      </div>
+    </div>
+
+    <button id="logoutBtn">Logout</button>
+  </div>
+
+  <footer>
+    &copy; 2023-2026 Hereditary Monarchy of Moeezland - Moeezland Internet Police (MIP)
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCs-pheSxe9bkAqnhG9qOjF7RvFfb9k00A",
+      authDomain: "e-civilian-portal2007.firebaseapp.com",
+      projectId: "e-civilian-portal2007",
+      storageBucket: "e-civilian-portal2007.firebasestorage.app",
+      messagingSenderId: "465001179759",
+      appId: "1:465001179759:web:60a45e286fbf1a39ac7b9a"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const profileDiv = document.getElementById('profile');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const welcomeHeader = document.getElementById('welcomeHeader');
+
+    function displayOrDefault(val) {
+      if (val === undefined || val === null || String(val).trim() === "")
+        return '<span class="muted">(not provided)</span>';
+      return String(val);
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      try {
+        const userDocRef = doc(db, 'users', user.uid);
+        const userSnap = await getDoc(userDocRef);
+
+        if (!userSnap.exists()) {
+          profileDiv.textContent = 'Profile not found. Please contact admin.';
+          return;
+        }
+
+        const data = userSnap.data();
+        profileDiv.innerHTML = `
+          <div class="field"><strong>Username:</strong> ${displayOrDefault(data.username)}</div>
+          <div class="field">
+  <strong>Email:</strong> ${displayOrDefault(data.email || user.email)}
+  <span id="changeEmailBtn" style="color:#0b56b3; cursor:pointer; margin-left:8px; font-weight:600;">
+    (Change)
+  </span>
+</div>
+          <div class="field"><strong>Civil ID:</strong> ${displayOrDefault(data.civilId)}</div>
+          <div class="field"><strong>Phone Number:</strong> ${displayOrDefault(data.phone)}</div>
+          <div class="field"><strong>Legal Name:</strong> ${displayOrDefault(data.legalName)}</div>
+          <div class="field"><strong>Sex:</strong> ${displayOrDefault(data.sex)}</div>
+          <div class="field"><strong>Date of Birth:</strong> ${displayOrDefault(data.dob)}</div>
+          <div class="field">
+  <strong>Digital ID:</strong>
+  ${
+    data.digitalid
+      ? `<button onclick="window.open('${data.digitalid}', '_blank')" 
+          style="
+            background:#0b56b3;
+            color:white;
+            border:none;
+            padding:6px 12px;
+            border-radius:6px;
+            cursor:pointer;
+            font-size:14px;
+          ">
+          View Digital ID
+        </button>`
+      : '<span class="muted">(not provided)</span>'
+  }
+</div>
+        `;
+
+        welcomeHeader.textContent = `Ya Hala!, ${data.username || 'Citizen'} 🤝`;
+      } catch (err) {
+        console.error(err);
+        profileDiv.textContent = 'Error loading data. Please try again later.';
+      }
+    });
+
+    logoutBtn.addEventListener('click', async () => {
+      await signOut(auth);
+      window.location.href = 'index.html';
+    });
+  
+// CHANGE EMAIL FEATURE
+import { updateEmail } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+import { updateDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+document.addEventListener("click", async (e) => {
+  if (e.target.id === "changeEmailBtn") {
+    const newEmail = prompt("Enter your new email:");
+
+    if (!newEmail) return;
+
+    try {
+      const user = auth.currentUser;
+      if (!user) {
+        alert("Error: Not logged in.");
+        return;
+      }
+
+      await updateEmail(user, newEmail.toLowerCase());
+
+      const userDocRef = doc(db, "users", user.uid);
+      await updateDoc(userDocRef, {
+        email: newEmail.toLowerCase(),
+        email_lower: newEmail.toLowerCase()
+      });
+
+      alert("Email updated! Please log in again.");
+
+      await signOut(auth);
+      window.location.href = "index.html";
+
+    } catch (err) {
+      console.error(err);
+      if (err.code === "auth/requires-recent-login") {
+        alert("You need to re-login first.");
+      } else {
+        alert("Error: " + err.message);
+      }
+    }
+  }
+});
+
+</script>
+</body>
+</html>

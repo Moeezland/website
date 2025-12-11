@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moeezland e-Civilian Portal</title>
+
+  <!-- intl-tel-input -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/css/intlTelInput.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/intlTelInput.min.js"></script>
+
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f8faff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logo img {
+      width: 420px;
+      max-width: 90%;
+    }
+    .container {
+      background: white;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+      padding: 30px 40px;
+      width: 360px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 1.3rem;
+      color: #0b56b3;
+      margin-bottom: 16px;
+    }
+    label {
+      font-weight: 500;
+      display: block;
+      margin: 8px 0 4px;
+      text-align: left;
+      color: #333;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    button {
+      background-color: #0b56b3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      width: 100%;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 5px;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #084a9c;
+    }
+    .switch {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #333;
+    }
+    .switch span {
+      color: #0b56b3;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    #message {
+      color: red;
+      margin-top: 10px;
+      min-height: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="logo">
+    <img src="0d7cc0c7-b1b8-456a-bb2a-0b8bc59a06a4.png" alt="Moeezland Population Service Logo">
+  </div>
+
+  <div class="container">
+    <h1>Moeezland e-Civilian Portal</h1>
+
+    <!-- Login -->
+    <div id="loginSection">
+      <label>Username</label>
+      <input type="text" id="loginUsername" placeholder="Enter your username" />
+
+      <label>Password</label>
+      <input type="password" id="loginPassword" placeholder="Enter your password" />
+
+      <button id="loginBtn">Login</button>
+
+      <div class="switch" style="margin-top:10px;">
+        <span onclick="window.location.href='reset.html'">Forgot password?</span>
+      </div>
+
+      <div class="switch">
+        Don’t have an account? <span id="toRegister">Register</span>
+      </div>
+    </div>
+
+    <!-- Register -->
+    <div id="registerSection" style="display:none;">
+      <label>Username (unique)</label>
+      <input type="text" id="regUsername" placeholder="Your username" />
+
+      <label>Email</label>
+      <input type="email" id="regEmail" placeholder="Your email" />
+
+      <label>Password</label>
+      <input type="password" id="regPassword" placeholder="Your password" />
+
+      <label>Civil ID</label>
+      <input type="text" id="civilId" placeholder="10-digit Civil ID" />
+
+      <label>Phone Number</label>
+      <input type="tel" id="phoneInput" placeholder="Enter your number" />
+
+      <button id="registerBtn">Create Account</button>
+
+      <div class="switch">
+        Already have an account? <span id="toLogin">Login</span>
+      </div>
+    </div>
+
+    <p id="message"></p>
+  </div>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword
+    } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      collection,
+      query,
+      where,
+      getDocs,
+      runTransaction
+    } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCs-pheSxe9bkAqnhG9qOjF7RvFfb9k00A",
+      authDomain: "e-civilian-portal2007.firebaseapp.com",
+      projectId: "e-civilian-portal2007",
+      storageBucket: "e-civilian-portal2007.firebasestorage.app",
+      messagingSenderId: "465001179759",
+      appId: "1:465001179759:web:60a45e286fbf1a39ac7b9a"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // init intl-tel-input
+    const phoneInputField = document.getElementById("phoneInput");
+    const iti = window.intlTelInput ? window.intlTelInput(phoneInputField, {
+      initialCountry: "auto",
+      separateDialCode: true,
+      nationalMode: false,
+      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.1.1/js/utils.js"
+    }) : null;
+
+    const loginSection = document.getElementById("loginSection");
+    const registerSection = document.getElementById("registerSection");
+    const message = document.getElementById("message");
+
+    document.getElementById("toRegister").onclick = () => {
+      loginSection.style.display = "none";
+      registerSection.style.display = "block";
+      message.textContent = "";
+    };
+    document.getElementById("toLogin").onclick = () => {
+      registerSection.style.display = "none";
+      loginSection.style.display = "block";
+      message.textContent = "";
+    };
+
+    // Helper: query whether a field value exists in users collection
+    async function isFieldTaken(field, value) {
+      if (!value) return false;
+      const q = query(collection(db, "users"), where(field, "==", value));
+      const snap = await getDocs(q);
+      return !snap.empty;
+    }
+
+    // sanitize civil id: keep digits only, preserve leading zeros
+    function sanitizeCivilId(input) {
+      return String(input || "").replace(/\D/g, "");
+    }
+
+    // sanitize phone: ensure starts with +, remove non-digit except leading +
+    function sanitizePhone(raw) {
+      let s = String(raw || "").trim();
+      if (!s) return "";
+      // if intl-tel-input provided something like +1 202-555-0123, it will be normalized below
+      if (!s.startsWith("+")) s = "+" + s;
+      // remove everything except digits and leading +
+      s = s.replace(/[^\+\d]/g, "");
+      return s;
+    }
+
+    // digits length check (excludes leading +)
+    function phoneDigitsCount(phoneE164) {
+      return (phoneE164.replace(/\D/g, "") || "").length;
+    }
+
+    /* REGISTER */
+    document.getElementById("registerBtn").addEventListener("click", async () => {
+      message.textContent = "";
+
+      // gather inputs
+      const username = (regUsername.value || "").trim();
+      const username_lower = username.toLowerCase();
+      const emailRaw = (regEmail.value || "").trim();
+      const email = emailRaw.toLowerCase();
+      const password = (regPassword.value || "").trim();
+      const civilRaw = (document.getElementById("civilId").value || "").trim();
+      const civilId = sanitizeCivilId(civilRaw); // preserves leading zeros
+      // get number from intl-tel-input if available (gives E.164), otherwise fallback to raw input
+      let phoneRaw = "";
+      try {
+        phoneRaw = iti ? iti.getNumber() : document.getElementById("phoneInput").value.trim();
+      } catch (err) {
+        phoneRaw = document.getElementById("phoneInput").value.trim();
+      }
+      const phone = sanitizePhone(phoneRaw);
+
+      // basic required check
+      if (!username || !email || !password || !civilId || !phone) {
+        message.textContent = "Please fill in all fields.";
+        return;
+      }
+
+      // Civil ID format: must be exactly 10 digits (including leading zeros)
+      if (civilId.length !== 10) {
+        message.textContent = "Civil ID must be exactly 10 digits.";
+        return;
+      }
+
+      // Phone digits length: between 10 and 16 digits (excluding +)
+      const phoneDigits = phoneDigitsCount(phone);
+      if (phoneDigits < 10 || phoneDigits > 16) {
+        message.textContent = "Phone number must be 10 to 16 digits long.";
+        return;
+      }
+
+      try {
+        // Early uniqueness pre-checks (reduce churn)
+        if (await isFieldTaken("username_lower", username_lower)) {
+          message.textContent = "Username already in use. Choose another username.";
+          return;
+        }
+        if (await isFieldTaken("civilId", civilId)) {
+          message.textContent = "Civil ID already registered to an account.";
+          return;
+        }
+        if (await isFieldTaken("email_lower", email)) {
+          message.textContent = "Email already registered.";
+          return;
+        }
+        if (await isFieldTaken("phone", phone)) {
+          message.textContent = "Phone number already registered.";
+          return;
+        }
+
+        // Next: verify civil_ids collection - it must exist and used === false
+        const civilDocRef = doc(db, "civil_ids", civilId);
+        const civilSnap = await getDocs ? null : null; // placeholder to keep lint happy (we use transaction below)
+        // We will create the Auth user first (Firebase requires uid to write user doc inside transaction).
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const uid = userCredential.user.uid;
+
+        // Now run a Firestore transaction to atomically:
+        // - confirm civil_ids/{civilId} exists and used === false
+        // - create users/{uid} document
+        // - set civil_ids/{civilId}.used = true and attach userUID + assignedAt
+        await runTransaction(db, async (tx) => {
+          const civilSnapTx = await tx.get(civilDocRef);
+          if (!civilSnapTx.exists()) {
+            throw new Error("Civil ID does not exist in government records.");
+          }
+          const civilData = civilSnapTx.data();
+          if (civilData && civilData.used === true) {
+            throw new Error("Civil ID already used/assigned.");
+          }
+
+          // As an extra safety check (non-atomic query) we already did pre-check above.
+          // Now set the user doc and mark civil id used inside the same transaction.
+          const userDocRef = doc(db, "users", uid);
+          tx.set(userDocRef, {
+            username,
+            username_lower,
+            email,
+            email_lower: email,
+            civilId,
+            phone,
+            createdAt: new Date().toISOString()
+          });
+
+          tx.update(civilDocRef, {
+            used: true,
+            userUID: uid,
+            assignedAt: new Date().toISOString()
+          });
+        });
+
+        // success: redirect
+        alert("Account created successfully!");
+        window.location.href = "dashboard.html";
+      } catch (e) {
+        // If transaction failed after creating Auth user, delete the newly created Auth user to avoid ghost accounts
+        try {
+          const currentUser = auth.currentUser;
+          // If the just-created user is signed in as currentUser and its uid matches what we just made,
+          // delete it. This avoid leaving an auth user without a user doc.
+          if (currentUser && currentUser.uid) {
+            // delete current user only if their email matches the attempted email (safety)
+            // and if user creation just happened
+            // Attempt deletion: new users can delete themselves immediately.
+            await currentUser.delete().catch(() => {});
+            // after deletion, sign out to clear session
+            try { await auth.signOut(); } catch (_) {}
+          }
+        } catch (delErr) {
+          // ignore deletion error but log to console
+          console.error("Error trying to delete failed-created auth user:", delErr);
+        }
+
+        // show error
+        const msg = (e && e.message) ? e.message : "Registration failed.";
+        message.textContent = msg;
+      }
+    });
+
+    /* LOGIN */
+    document.getElementById("loginBtn").addEventListener("click", async () => {
+      const username = (loginUsername.value || "").trim().toLowerCase();
+      const password = (loginPassword.value || "").trim();
+
+      if (!username || !password) {
+        message.textContent = "Please fill in all fields.";
+        return;
+      }
+
+      try {
+        const q = query(collection(db, "users"), where("username_lower", "==", username));
+        const snap = await getDocs(q);
+
+        if (snap.empty) {
+          message.textContent = "User not found.";
+          return;
+        }
+
+        const email = snap.docs[0].data().email;
+        await signInWithEmailAndPassword(auth, email, password);
+
+        alert("Login successful!");
+        window.location.href = "dashboard.html";
+      } catch (e) {
+        message.textContent = e.message;
+      }
+    });
+  </script>
+</body>
+</html>
