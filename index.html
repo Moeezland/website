@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Moeezland — Official</title>
+  <meta name="description" content="Official website of the Moeezland government" />
+  <link rel="icon" href="/favicon.ico" />
+
+  <style>
+    :root{
+      --blue:#0f4ea8;
+      --light:#eef2f7;
+      --bg:#0b0b0c;
+      --muted:#6b7280;
+      --white:#ffffff;
+      --max-width:1200px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#071018 0%, #071018 100%);
+      color:var(--white);
+      -webkit-font-smoothing:antialiased;
+    }
+
+    .trust-banner{
+      background:var(--light);
+      color:#09233a;
+      font-size:14px;
+      padding:10px 16px;
+      text-align:center;
+    }
+
+    .trust-banner a{
+      color:#0b4ea8;
+      text-decoration:underline;
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    .trust-expand {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.35s ease, opacity 0.35s ease;
+      background:#eef2f7;
+      color:#072036;
+      padding:0 22px;
+      border-bottom:1px solid #d2dae2;
+    }
+
+    .trust-expand.open {
+      max-height: 300px;
+      opacity: 1;
+      padding:18px 22px;
+    }
+
+    .verify-row {
+      display:flex;
+      justify-content:flex-start;
+      align-items:flex-start;
+      gap:40px;
+    }
+
+    @media (max-width:750px){
+      .verify-row { flex-direction:column; gap:18px; }
+    }
+
+    .verify-item {
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+      max-width:500px;
+    }
+
+    .verify-item img {
+      width:42px;
+      height:42px;
+      border-radius:50%;
+    }
+
+    header{
+      background:rgba(255,255,255,0.95);
+      color:#05243a;
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(6px);
+      box-shadow:0 1px 0 rgba(2,6,23,0.06)
+    }
+
+    .nav{
+      max-width:var(--max-width);
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px;
+    }
+
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .govlogo {
+      height:52px;
+      object-fit:contain;
+    }
+
+    nav ul{
+      list-style:none;
+      display:flex;
+      gap:18px;
+      margin:0;
+      padding:0;
+    }
+
+    nav a{
+      color:#0b3b59;
+      text-decoration:none;
+      font-weight:600;
+    }
+
+    .cta{
+      background:var(--blue);
+      color:white;
+      padding:10px 14px;
+      border-radius:8px;
+      text-decoration:none;
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero .media {
+      height:66vh;
+      min-height:420px;
+      background-image:url("welcome.png");
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+      width:100%;
+    }
+
+    .hero .overlay{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+    }
+
+    .container{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:48px 24px;
+    }
+
+    /* Original left shift */
+    .hero-content{
+      max-width:640px;
+      color:var(--white);
+      text-shadow:0 6px 20px rgba(0,0,0,0.6);
+      margin-left:-525px;
+    }
+
+    .hero-logo-wrapper { margin-bottom:14px; }
+
+    .hero-logo {
+      height:130px;
+      object-fit:contain;
+    }
+
+    .hero h2{
+      font-size:44px;
+      line-height:1.02;
+      margin:0 0 14px 0;
+    }
+
+    .hero p{
+      color:rgba(255,255,255,0.92);
+      line-height:1.6;
+      margin:0 0 24px;
+    }
+
+    .hero .btn{
+      display:inline-block;
+      background:var(--blue);
+      color:white;
+      padding:12px 18px;
+      border-radius:8px;
+      text-decoration:none;
+      font-weight:700;
+      box-shadow:0 6px 18px rgba(11,78,168,0.22);
+    }
+
+    .quick{
+      background:#e9eef4;
+      color:#0b1f2b;
+      padding:48px 24px;
+    }
+
+    .quick .grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+      max-width:var(--max-width);
+      margin:0 auto;
+    }
+
+    .card{
+      background:white;
+      border-radius:14px;
+      padding:22px;
+      color:#05243a;
+      box-shadow:0 10px 30px rgba(2,6,23,0.06);
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+
+    .card img{
+      width:56px;
+      height:56px;
+      object-fit:cover;
+      border-radius:8px;
+    }
+
+    footer{
+      padding:28px 24px;
+      color:rgba(255,255,255,0.8);
+      text-align:center;
+    }
+
+    /* --- MOBILE FIXES --- */
+    @media (max-width:750px){
+
+      .hero-content {
+        margin-left:0 !important;
+        text-align:center;
+      }
+
+      .hero-logo {
+        height:90px;
+      }
+
+      .hero h2 {
+        font-size:30px;
+      }
+
+      .hero p {
+        font-size:15px;
+      }
+
+      .hero .btn {
+        padding:12px 20px;
+        font-size:16px;
+      }
+
+      nav ul {
+        display:none;
+      }
+
+      .cta {
+        padding:8px 12px;
+      }
+
+      .quick .grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="trust-banner" id="trustBanner">
+    <span>An official website of the Moeezland government — secure connection & verified domain.</span>
+    <a id="verifyToggle">Learn how we verify ▾</a>
+  </div>
+
+  <div class="trust-expand" id="trustExpand">
+    <div class="verify-row">
+
+      <div class="verify-item">
+        <img src="gov-blue-building.png">
+        <p><strong>Official websites end with .moeezland.org</strong><br>Only verified Moeezland government services use this domain.</p>
+      </div>
+
+      <div class="verify-item">
+        <img src="gov-green-lock.png">
+        <p><strong>Secure websites use HTTPS</strong><br>The lock icon confirms your connection is encrypted & safe.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <img src="govlogo.png" class="govlogo">
+        <div><h1>Moeezland حكومة معزلاند</h1></div>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#membership">Membership</a></li>
+          <li><a href="#institutions">Institutions</a></li>
+          <li><a href="#governance">Governance</a></li>
+          <li><a href="#services">Services</a></li>
+        </ul>
+      </nav>
+
+      <a class="cta" href="#apply">Join</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="media"></div>
+
+    <div class="overlay">
+      <div class="container">
+
+        <div class="hero-content">
+
+          <div class="hero-logo-wrapper">
+            <img src="minigov.png" class="hero-logo" alt="Moeezland emblem">
+          </div>
+
+          <h2>Welcome to the Moeezland Government</h2>
+
+          <p>
+            The Moeezland Republic is a micronation focused on digital civic services,
+            cultural exchange, and collaborative governance. We build tools and systems for
+            our citizens — friendly, secure, and modern.
+          </p>
+
+          <a class="btn" href="#services">Explore services</a>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="quick" id="services">
+    <div class="container">
+      <h3 style="color:var(--blue);margin-bottom:16px">Quick Access</h3>
+
+      <div class="grid">
+
+        <div class="card">
+          <img src="passport.png">
+          <div><strong>Passport verification</strong><div style="font-size:13px;color:var(--muted);margin-top:6px">Check status & request issuance</div></div>
+        </div>
+
+        <div class="card">
+          <img src="idcard.png">
+          <div><strong>Digital civil ID</strong><div style="font-size:13px;color:var(--muted);margin-top:6px">Save to wallet & share securely</div></div>
+        </div>
+
+        <div class="card">
+          <img src="portal.png">
+          <div><strong>e-Civilian portal</strong><div style="font-size:13px;color:var(--muted);margin-top:6px">Login, register & manage account</div></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © Moeezland • Built with 💙 • Privacy • Contact
+  </footer>
+
+<script>
+  const toggle = document.getElementById("verifyToggle");
+  const panel = document.getElementById("trustExpand");
+
+  toggle.addEventListener("click", () => {
+    panel.classList.toggle("open");
+    toggle.textContent = panel.classList.contains("open")
+      ? "Hide verification details ▴"
+      : "Learn how we verify ▾";
+  });
+</script>
+
+</body>
+</html>
