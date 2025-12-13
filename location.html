@@ -9,7 +9,6 @@
     :root{
       --blue:#0f4ea8;
       --light:#eef2f7;
-      --bg:#0b0b0c;
       --muted:#6b7280;
       --white:#ffffff;
       --max-width:1200px;
@@ -53,6 +52,7 @@
       padding:18px 22px;
     }
 
+    /* HEADER */
     header{
       background:white;
       position:sticky;
@@ -68,6 +68,22 @@
       justify-content:space-between;
       align-items:center;
       padding:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .govlogo{
+      height:46px;
+      object-fit:contain;
+    }
+
+    .brand h1{
+      font-size:19.5px;
+      margin:0;
     }
 
     nav ul{
@@ -182,15 +198,17 @@
 
 <header>
   <div class="nav">
+
+    <!-- BRAND WITH LOGO (FIXED) -->
     <div class="brand">
-  <img src="govlogo.png" class="govlogo" alt="Moeezland Government Logo">
-  <h1>Moeezland حكومة معزلاند</h1>
-</div>
+      <img src="govlogo.png" class="govlogo" alt="Moeezland Government Logo">
+      <h1>Moeezland حكومة معزلاند</h1>
+    </div>
 
     <nav>
       <ul>
         <li><a href="/">Home</a></li>
-        <li><a href="https://upmgov.org" target="_blank">Membership</a></li>
+        <li><a href="https://www.upmgov.org" target="_blank">Membership</a></li>
         <li><a href="/location.html">Location</a></li>
         <li><a href="https://forms.gle/xMVx6KbQZQD8LMrB7" target="_blank">Join Parliament</a></li>
       </ul>
@@ -279,4 +297,3 @@
 
 </body>
 </html>
-
