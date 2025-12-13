@@ -163,11 +163,13 @@
     }
 
     .hero-content{
-      max-width:640px;
-      color:var(--white);
-      text-shadow:0 6px 20px rgba(0,0,0,0.6);
-      margin-left:-525px;
-    }
+  max-width:640px;
+  color:var(--white);
+  text-shadow:0 6px 20px rgba(0,0,0,0.6);
+
+  /* FIX: keep left alignment without breaking small monitors */
+  margin-left:-300px;
+}
 
     .hero-logo-wrapper { margin-bottom:14px; }
 
@@ -438,5 +440,6 @@
 
 </body>
 </html>
+
 
 
