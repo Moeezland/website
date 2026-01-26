@@ -12,14 +12,6 @@ jobs:
     steps:
       - name: Send Discord notification
         run: |
-          curl -H "Content-Type: application/json" \
-          -X POST \
-          -d '{
-            "embeds":[{
-              "title":"New Press Release — Moeezland",
-              "description":"A new official announcement has been published.",
-              "url":"https://moeezland.com/press.html",
-              "footer":{"text":"Government of Moeezland"}
-            }]
-          }' \
+          curl -X POST -H "Content-Type: application/json" \
+          -d '{"content":"📢 New Moeezland press release published"}' \
           ${{ secrets.DISCORD_WEBHOOK }}
