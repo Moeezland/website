@@ -22,4 +22,4 @@ jobs:
               "footer":{"text":"Government of Moeezland"}
             }]
           }' \
-          ${{ secrets.https://discord.com/api/webhooks/1462126190180565154/Vb3RCwWT6j88KsNTiUhXKUkximYKHYhqcIhK48T4H3pb0YLf_YMPX-kUDycCQWPrexNn }}
+          ${{ secrets.DISCORD_WEBHOOK }}
