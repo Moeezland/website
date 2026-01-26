@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>Government of Moeezland — Press Releases</title>
+  <link>https://moeezland.com/press.html</link>
+  <description>Official announcements and national statements issued by the Government of Moeezland.</description>
+  <language>en</language>
+
+  <item>
+    <title>Flag and Emblem Redesigned</title>
+    <link>https://moeezland.com/press.html</link>
+    <pubDate>Thu, 23 Jan 2026 00:00:00 GMT</pubDate>
+    <description>
+      Moeezland has officially redesigned its national flag and emblem. The new symbols will become official by July 23, 2026.
+    </description>
+  </item>
+
+  <!-- Add newest items on top -->
+</channel>
+</rss>
