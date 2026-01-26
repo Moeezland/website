@@ -1,17 +1,12 @@
-name: Press Notification
+name: Webhook Test
 
-on:
-  push:
-    paths:
-      - "**/press.html"
-      - "**/press.xml"
+on: [push]
 
 jobs:
-  notify:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Send Discord notification
-        run: |
+      - run: |
           curl -X POST -H "Content-Type: application/json" \
-          -d '{"content":"📢 New Moeezland press release published"}' \
+          -d '{"content":"🚨 Webhook test — if you see this, it WORKS"}' \
           ${{ secrets.DISCORD_WEBHOOK }}
