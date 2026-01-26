@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - "**/press.html"
-      - "**/press.xml"
 
 jobs:
   notify:
