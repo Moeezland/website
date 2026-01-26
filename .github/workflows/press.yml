@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - "**/press.html"
-      - "**/press.xml"
 
 jobs:
   notify:
@@ -12,15 +11,6 @@ jobs:
     steps:
       - name: Send Discord press notification
         run: |
-          curl -X POST -H "Content-Type: application/json" \
-          -d '{
-            "embeds":[{
-              "title":"Official Press Release — Government of Moeezland",
-              "description":"A new official announcement has been published by the Government of Moeezland.",
-              "url":"https://moeezland.com/press.html",
-              "footer":{
-                "text":"Hereditary Monarchy of Moeezland"
-              }
-            }]
-          }' \
-          ${{ secrets.DISCORD_WEBHOOK }}
+          curl -X POST "${{ secrets.DISCORD_WEBHOOK }}" \
+          -H "Content-Type: application/json" \
+          -d '{"content":"📢 New official press release published by the Government of Moeezland\nhttps://moeezland.com/press.html"}'
