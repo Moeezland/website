@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+viewBox="0 0 64 64"
+fill="none">
+
+<path d="M22 36H45C51 36 56 32 56 27C56 22 52 18 47 18C45.8 12.8 40.6 8 34 8C27.4 8 22.1 12.6 20.9 18.8C15.6 19.1 12 23 12 27C12 32 16.7 36 22 36Z"
+stroke="#0B4EA2"
+stroke-width="2.5"/>
+
+<text x="22" y="54"
+font-size="18"
+fill="#0B4EA2">*</text>
+
+<text x="32" y="54"
+font-size="18"
+fill="#0B4EA2">*</text>
+
+<text x="42" y="54"
+font-size="18"
+fill="#0B4EA2">*</text>
+
+</svg>
