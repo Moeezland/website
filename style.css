@@ -1540,6 +1540,59 @@ RESPONSIVE
 
 }
 
+.signin-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-top:-25px;
+
+    margin-bottom:45px;
+
+    padding:14px 24px;
+
+    background:#ffffff;          /* Yellow/Orange */
+
+    color:#1D2939;
+
+    border:2px solid #F4B400;
+
+    font-weight:600;
+
+    transition:.25s ease;
+
+    cursor:pointer;
+
+}
+
+.signin-btn:hover,
+.signin-btn:focus,
+.signin-btn:active{
+
+    background:#F4B400;
+
+    color:#1D2939;
+
+    border-color:#F4B400;
+
+}
+
+.signin-btn img{
+
+    width:18px;
+
+    height:18px;
+
+    object-fit:contain;
+
+    flex-shrink:0;
+
+    /* NO filter here */
+}
+
 /* ==========================
    MOBILE
 ========================== */
